@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1762254838732" clover="3.2.0">
+  <project timestamp="1762254838732" name="All files">
+    <metrics statements="44" coveredstatements="44" conditionals="14" coveredconditionals="14" methods="17" coveredmethods="17" elements="75" coveredelements="75" complexity="0" loc="44" ncloc="44" packages="2" files="4" classes="4"/>
+    <package name="hooks">
+      <metrics statements="30" coveredstatements="30" conditionals="2" coveredconditionals="2" methods="15" coveredmethods="15"/>
+      <file name="useReactiveRef.tsx" path="/Users/racgoo/Documents/rmlx/reactive-kit/src/react/hooks/useReactiveRef.tsx">
+        <metrics statements="19" coveredstatements="19" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="9"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="12" count="70" type="stmt"/>
+        <line num="13" count="70" type="stmt"/>
+        <line num="16" count="70" type="stmt"/>
+        <line num="17" count="70" type="stmt"/>
+        <line num="24" count="23" type="stmt"/>
+        <line num="25" count="23" type="stmt"/>
+        <line num="29" count="23" type="stmt"/>
+        <line num="31" count="23" type="stmt"/>
+        <line num="32" count="23" type="stmt"/>
+        <line num="33" count="47" type="stmt"/>
+        <line num="35" count="24" type="stmt"/>
+        <line num="41" count="23" type="stmt"/>
+        <line num="44" count="23" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="48" count="23" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+      </file>
+      <file name="useReactiveState.tsx" path="/Users/racgoo/Documents/rmlx/reactive-kit/src/react/hooks/useReactiveState.tsx">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="7" count="38" type="stmt"/>
+        <line num="9" count="38" type="stmt"/>
+        <line num="10" count="20" type="stmt"/>
+        <line num="11" count="41" type="stmt"/>
+        <line num="13" count="21" type="stmt"/>
+        <line num="19" count="20" type="stmt"/>
+        <line num="22" count="38" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="14" coveredstatements="14" conditionals="12" coveredconditionals="12" methods="2" coveredmethods="2"/>
+      <file name="isPrimitive.ts" path="/Users/racgoo/Documents/rmlx/reactive-kit/src/react/utils/isPrimitive.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="44" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+      </file>
+      <file name="shallowCopy.ts" path="/Users/racgoo/Documents/rmlx/reactive-kit/src/react/utils/shallowCopy.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="12" coveredconditionals="12" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="61" type="cond" truecount="2" falsecount="0"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="54" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="8" count="47" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="42" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="14" count="35" type="cond" truecount="4" falsecount="0"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="17" count="18" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

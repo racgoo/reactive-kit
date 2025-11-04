@@ -1,3 +1,4 @@
+import { isPrimitive } from "@react/utils/isPrimitive";
 import { reactive, watch } from "@vue/reactivity";
 import { useEffect, useMemo, type MutableRefObject } from "react";
 
@@ -25,17 +26,24 @@ function useReactiveSubRef<T, K>(
     [reactiveRef, selector]
   );
 
-  const subReactiveRef: ReactiveRef<K> = useReactiveRef(selectedRef);
+  let subReactiveRef: ReactiveRef<K> = useReactiveRef(selectedRef);
 
   useEffect(() => {
     const stop = watch(
       () => selector(reactiveRef),
       (newVal) => {
         subReactiveRef.current = newVal;
+      },
+      {
+        deep: true,
       }
     );
     return () => stop();
   }, [reactiveRef]);
+
+  if (isPrimitive(reactiveRef.current)) {
+    subReactiveRef = reactiveRef as unknown as ReactiveRef<K>;
+  }
 
   return subReactiveRef;
 }
