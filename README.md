@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.0.1)
+# @racgoo/reactive-kit(v1.0.2)
 
 <img width="400" height="400" alt="26f9e53d-ad7a-4648-aed8-ceddc0be5ea1" src="https://github.com/user-attachments/assets/80715e85-4405-41a4-9092-81fb7760b769" />
 
