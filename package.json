@@ -1,0 +1,78 @@
+{
+  "name": "reactive-kit",
+  "description": "reactive-kit",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "reactive",
+    "state",
+    "toolkit",
+    "vue",
+    "reactivity",
+    "react-fine-grained"
+  ],
+  "version": "0.0.1",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm build:react",
+    "build:react": "tsup src/react/index.ts --dts --format cjs,esm --out-dir dist/react",
+    "type-check": "tsc --noEmit",
+    "test": "jest --coverage",
+    "test:core": "jest --selectProjects=core --coverage",
+    "test:react": "jest --selectProjects=react --coverage",
+    "test:watch": "jest --watch",
+    "release": "pnpm run build && pnpm publish --access=public"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^18.0.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "ts-jest": "^29.4.5",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "@vue/reactivity": "^3.5.22",
+    "observable-slim": "^0.1.6",
+    "proxy-compare": "^3.0.1",
+    "reflect-metadata": "^0.2.2",
+    "valtio": "^2.1.8"
+  }
+}
