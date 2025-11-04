@@ -21,7 +21,7 @@
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["reflect-metadata", "jest"],
+    "types": ["jest"],
 
     /* Linting */
     "strict": true,
