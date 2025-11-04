@@ -76,10 +76,6 @@
     }
   },
   "dependencies": {
-    "@vue/reactivity": "^3.5.22",
-    "observable-slim": "^0.1.6",
-    "proxy-compare": "^3.0.1",
-    "reflect-metadata": "^0.2.2",
-    "valtio": "^2.1.8"
+    "@vue/reactivity": "^3.5.22"
   }
 }
