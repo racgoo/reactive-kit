@@ -1,4 +1,4 @@
-# reactive-kit(v1.0.0)
+# @racgoo/reactive-kit(v1.0.0)
 
 > 객체, 배열, Map, Set, 그리고 모든 원시 타입을 지원하는 React용 Reactive Fine Grained 유틸리티 도구입니다.  
 > `@vue/reactivity` 패키지를 코어로 동작합니다.

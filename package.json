@@ -1,19 +1,25 @@
 {
-  "name": "reactive-kit",
+  "name": "@racgoo/reactive-kit",
   "description": "reactive-kit",
+  "author": {
+    "name": "Racgoo",
+    "email": "lhsung98@naver.com",
+    "url": "https://github.com/racgoo"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/racgoo/reactive-kit"
   },
   "bugs": {
-    "url": "https://github.com/racgoo/reactive-kit/issues"
+    "url": "https://github.com/racgoo/reactive-kit/issues",
+    "email": "issues@axios.com"
   },
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
-  "license": "MIT",
+  "license": "(MIT OR Apache-2.0)",
   "keywords": [
     "react",
     "reactive",
@@ -46,7 +52,7 @@
     "test:core": "jest --selectProjects=core --coverage",
     "test:react": "jest --selectProjects=react --coverage",
     "test:watch": "jest --watch",
-    "release": "pnpm run build && pnpm publish --access=public"
+    "release": "pnpm run build && pnpm run test && pnpm publish --access=public"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
