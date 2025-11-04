@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.0.0)
+# @racgoo/reactive-kit(v1.0.1)
 
 > 객체, 배열, Map, Set, 그리고 모든 원시 타입을 지원하는 React용 Reactive Fine Grained 유틸리티 도구입니다.  
 > `@vue/reactivity` 패키지를 코어로 동작합니다.
@@ -54,11 +54,11 @@
 ## 설치
 
 ```bash
-npm install reactive-kit
+npm install @racgoo/reactive-kit
 # 또는
-pnpm add reactive-kit
+pnpm add @racgoo/reactive-kit
 # 또는
-yarn add reactive-kit
+yarn add @racgoo/reactive-kit
 ```
 
 ## 사용 예시
@@ -68,7 +68,7 @@ import {
   useReactiveRef, // ref 기반의 observable 값 생성 (리렌더 없음)
   useReactiveState, // ref를 트래킹 React state로 변환 (ref와 동기화됨)
   useReactiveSubRef, // 기존 ref에서 하위 필드/객체를 위한 sub-ref 생성 (깊은 슬라이스!)
-} from "reactive-kit/react";
+} from "@racgoo/reactive-kit/react";
 
 function App() {
   // useReactiveRef: 반응형(ref 기반)으로 객체/배열/Map/Set/원시타입 등 초기화

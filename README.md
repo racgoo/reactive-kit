@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.0.0)
+# @racgoo/reactive-kit(v1.0.1)
 
 <img width="400" height="400" alt="26f9e53d-ad7a-4648-aed8-ceddc0be5ea1" src="https://github.com/user-attachments/assets/80715e85-4405-41a4-9092-81fb7760b769" />
 
@@ -57,11 +57,11 @@ All updates use Vue’s (`@vue/reactivity`) engine underneath, so only the neces
 ## Installation
 
 ```bash
-npm install reactive-kit
+npm install @racgoo/reactive-kit
 # or
-pnpm add reactive-kit
+pnpm add @racgoo/reactive-kit
 # or
-yarn add reactive-kit
+yarn add @racgoo/reactive-kit
 ```
 
 ## Usage Example
@@ -71,7 +71,7 @@ import {
   useReactiveRef, // creates an observable value (no re-render on change)
   useReactiveState, // synchronizes the ref to an auto-updating React state
   useReactiveSubRef, // create sub-refs (deep slice!) for fields or parts of the ref
-} from "reactive-kit/react";
+} from "@racgoo/reactive-kit/react";
 
 function App() {
   // useReactiveRef: initialize a fully reactive ref for object/array/Map/Set/primitives.
