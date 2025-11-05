@@ -11,13 +11,13 @@ dependencies:
 
 devDependencies:
   '@testing-library/react':
-    specifier: ^14.0.0
+    specifier: ^14.3.1
     version: 14.3.1(@types/react@18.3.26)(react-dom@18.3.1)(react@18.3.1)
   '@types/jest':
     specifier: ^30.0.0
     version: 30.0.0
   '@types/react':
-    specifier: ^18.0.0
+    specifier: ^18.3.26
     version: 18.3.26
   jest:
     specifier: ^30.2.0
@@ -26,10 +26,10 @@ devDependencies:
     specifier: ^30.2.0
     version: 30.2.0
   react:
-    specifier: ^18.0.0
+    specifier: ^18.3.1
     version: 18.3.1
   react-dom:
-    specifier: ^18.0.0
+    specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
   ts-jest:
     specifier: ^29.4.5
@@ -1691,8 +1691,8 @@ packages:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
 
-  /baseline-browser-mapping@2.8.23:
-    resolution: {integrity: sha512-616V5YX4bepJFzNyOfce5Fa8fDJMfoxzOIzDCZwaGL8MKVpFrXqfNUoIpRn9YMI5pXf/VKgzjB4htFMsFKKdiQ==}
+  /baseline-browser-mapping@2.8.24:
+    resolution: {integrity: sha512-uUhTRDPXamakPyghwrUcjaGvvBqGrWvBHReoiULMIpOJVM9IYzQh83Xk2Onx5HlGI2o10NNCzcs9TG/S3TkwrQ==}
     hasBin: true
     dev: true
 
@@ -1721,7 +1721,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      baseline-browser-mapping: 2.8.23
+      baseline-browser-mapping: 2.8.24
       caniuse-lite: 1.0.30001753
       electron-to-chromium: 1.5.244
       node-releases: 2.0.27

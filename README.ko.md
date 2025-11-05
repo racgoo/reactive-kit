@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.0.2)
+# @racgoo/reactive-kit(v1.1.0)
 
 Github: [https://github.com/racgoo/reactive-kit](https://github.com/racgoo/reactive-kit)
 
@@ -26,12 +26,20 @@ NPM: [https://www.npmjs.com/package/@racgoo/reactive-kit](https://www.npmjs.com/
   - 반응형(Reactive Fine Grained) 업데이트가 가능한 수정 가능한 ReactiveRef((`{ current: T }`))를 반환합니다. 변경해도 컴포넌트가 자동으로 리렌더되지 **않습니다**.
   - `Vue`에서 다루는 어떤 타입의 값도 저장/수정에 적합합니다.
 
-- **`useReactiveState<T>(reactiveRef: ReactiveRef<T>)`**
+- **`useReactiveState<T>(reactiveRef: ReactiveRef<T>): T`**
+- **`useReactiveState<T>(selector: () => T): T`**
 
-  - 주어진 ReactiveRef로부터 현재 값의 "state 뷰"를 반환합니다. 인자로 제공된 ReactiveRef가 변경되면 리턴하는 state를 갱신하며 랜더링 트리거를 작동시킵니다.
+  - **ReactiveRef 모드**: 주어진 ReactiveRef로부터 현재 값의 "state 뷰"를 반환합니다. 인자로 제공된 ReactiveRef가 변경되면 리턴하는 state를 갱신하며 렌더링 트리거를 작동시킵니다.
+  - **Selector 모드**: 여러 ReactiveRef를 조합하여 computed state를 생성합니다. selector 함수 내부에서 사용된 ref들의 변경을 자동으로 추적하여 state를 갱신합니다.
 
-- **`useReactiveSubRef<T, S>(parentRef: ReactiveRef<T>, selector: (ref: ReactiveRef<T>) => S)`**
+- **`useReactiveSubRef<T, S>(parentRef: ReactiveRef<T>, selector: (ref: ReactiveRef<T>) => S): ReactiveRef<S>`**
+
   - 상위 ReactiveRef로부터 하위 필드나 값을 범위로 하는 새로운 ReactiveRef를 만듭니다. 모든 sub-ref는 원본과 동기화됩니다.
+
+- **`useReactiveEffect(effectCallback: () => void): void`**
+  - ReactiveRef의 변경을 감지하여 side effect를 실행합니다. effect 내부에서 접근한 모든 reactive 값들을 자동으로 추적하며, 변경 시 effect를 재실행합니다.
+  - 여러 동기적 변경사항을 배치 처리하여 한 번만 실행되도록 최적화되어 있습니다.
+  - 컴포넌트 unmount 시 자동으로 cleanup되며, pending 중인 타이머도 모두 정리되어 메모리 누수를 방지합니다.
 
 ## 주요 특징
 
@@ -72,6 +80,7 @@ import {
   useReactiveRef, // ref 기반의 observable 값 생성 (리렌더 없음)
   useReactiveState, // ref를 트래킹 React state로 변환 (ref와 동기화됨)
   useReactiveSubRef, // 기존 ref에서 하위 필드/객체를 위한 sub-ref 생성 (깊은 슬라이스!)
+  useReactiveEffect, // reactive 값 변경 시 side effect 실행
 } from "@racgoo/reactive-kit/react";
 
 function App() {
@@ -117,6 +126,21 @@ function App() {
   const friendState = useReactiveState(friendsRef); // friends 배열 변경 시 리렌더
   const skillSetState = useReactiveState(skillSetRef); // Set 변동도 감지
 
+  // useReactiveState with selector: 여러 ref를 조합한 computed state
+  const friendCount = useReactiveState(() => friendsRef.current.length);
+  const skillCount = useReactiveState(() => skillSetRef.current.size);
+  const summary = useReactiveState(
+    () =>
+      `${profileRef.current.name} has ${friendCount} friends and ${skillCount} skills`
+  );
+
+  // useReactiveEffect: reactive 값 변경 시 side effect 실행
+  useReactiveEffect(() => {
+    console.log("Profile changed:", profileRef.current.name);
+    console.log("Friend count:", friendsRef.current.length);
+    // 여러 ref를 동시에 추적 가능하며, 변경 시 자동으로 재실행됨
+  });
+
   const handleClick = () => {
     // useReactiveState로 만든 state는 깊이 관찰됨. 아래 코드 실행 시 자동 재렌더!
     // 예시: 문자열, 숫자, Set, 배열 변이 모두 감지됨
@@ -134,6 +158,7 @@ function App() {
       <div>Profile: {JSON.stringify(profileState)}</div>
       <div>Friends: {JSON.stringify(friendState)}</div>
       <div>Skill Set: {JSON.stringify(skillSetState)}</div>
+      <div>Summary: {summary}</div>
     </div>
   );
 }
@@ -145,7 +170,10 @@ export default App;
 
 - `useReactiveRef`로 만든 ref는 값이 바뀌어도 컴포넌트가 자동 리렌더되지 않음 (직접 접근/수정 가능)
 - `useReactiveState`로 얻은 값은 바뀌면 자동 리렌더 (React state와 동일)
+  - **ReactiveRef 모드**: 특정 ref를 state로 변환하여 추적
+  - **Selector 모드**: 여러 ref를 조합하여 computed state 생성 (자동 의존성 추적)
 - `useReactiveSubRef`로 원본 ref의 하위 구조(필드, 배열, Set 등)를 별도의 ref로 slice해 세밀하게 분리 관찰 가능. subRef는 원본과 항상 동기화. (깊은 중첩도 지원)
+- `useReactiveEffect`로 reactive 값 변경 시 side effect 실행 (여러 ref 동시 추적 가능, 자동 배치 처리)
 - Array, Object, Map, Set, Primitive 전부 트래킹/관찰 가능! 배열의 push/pop, set의 add/delete 등 변이도 완벽 반영
 - 각 state는 내부적으로 proxy로 래핑되어 변동 시 해당 부분만 재렌더
 

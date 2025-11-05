@@ -1,0 +1,32 @@
+
+> @racgoo/reactive-kit@1.0.2 test
+> jest --selectProjects=react
+
+Running one project: react
+PASS react src/react/utils/__test__/shallowCopy.test.ts
+PASS react src/react/utils/__test__/isPrimitive.test.ts
+PASS react src/react/hooks/__test__/useReactiveRef.test.tsx
+FAIL react src/react/hooks/__test__/useReactiveEffect.test.tsx
+  ● Test suite failed to run
+
+    [96msrc/react/hooks/__test__/useReactiveEffect.test.tsx[0m:[93m1[0m:[93m27[0m - [91merror[0m[90m TS6133: [0m'waitFor' is declared but its value is never read.
+
+    [7m1[0m import { renderHook, act, waitFor } from "@testing-library/react";
+    [7m [0m [91m                          ~~~~~~~[0m
+    [96msrc/react/hooks/__test__/useReactiveEffect.test.tsx[0m:[93m372[0m:[93m11[0m - [91merror[0m[90m TS6133: [0m'result' is declared but its value is never read.
+
+    [7m372[0m     const { result } = renderHook(() => {
+    [7m   [0m [91m          ~~~~~~~~~~[0m
+    [96msrc/react/hooks/__test__/useReactiveEffect.test.tsx[0m:[93m384[0m:[93m7[0m - [91merror[0m[90m TS2304: [0mCannot find name 'ref'.
+
+    [7m384[0m       ref.current = 10;
+    [7m   [0m [91m      ~~~[0m
+
+PASS react src/react/hooks/__test__/useReactiveState.selector.test.tsx
+PASS react src/react/hooks/__test__/useReactiveState.test.tsx
+
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       2 skipped, 78 passed, 80 total
+Snapshots:   0 total
+Time:        3.505 s
+Ran all test suites.

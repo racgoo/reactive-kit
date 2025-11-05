@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.0.2)
+# @racgoo/reactive-kit(v1.1.0)
 
 <img width="400" height="400" alt="26f9e53d-ad7a-4648-aed8-ceddc0be5ea1" src="https://github.com/user-attachments/assets/80715e85-4405-41a4-9092-81fb7760b769" />
 
@@ -30,12 +30,20 @@ All updates use Vue’s (`@vue/reactivity`) engine underneath, so only the neces
   - Returns a mutable ReactiveRef (`{ current: T }`) supporting reactive fine-grained updates. Mutating this directly **does not** cause the component to re-render.
   - Any value type that works with Vue can be stored and updated.
 
-- **`useReactiveState<T>(reactiveRef: ReactiveRef<T>)`**
+- **`useReactiveState<T>(reactiveRef: ReactiveRef<T>): T`**
+- **`useReactiveState<T>(selector: () => T): T`**
 
-  - Returns the current "state-view" of the provided ReactiveRef. If the ReactiveRef changes, the returned state updates and triggers re-render.
+  - **ReactiveRef mode**: Returns the current "state-view" of the provided ReactiveRef. If the ReactiveRef changes, the returned state updates and triggers re-render.
+  - **Selector mode**: Creates computed state by combining multiple ReactiveRefs. Automatically tracks refs used within the selector function and updates state when they change.
 
-- **`useReactiveSubRef<T, S>(parentRef: ReactiveRef<T>, selector: (ref: ReactiveRef<T>) => S)`**
+- **`useReactiveSubRef<T, S>(parentRef: ReactiveRef<T>, selector: (ref: ReactiveRef<T>) => S): ReactiveRef<S>`**
+
   - Creates a new ReactiveRef for a subfield or value within the parent, synchronized with the original.
+
+- **`useReactiveEffect(effectCallback: () => void): void`**
+  - Executes side effects when ReactiveRef changes are detected. Automatically tracks all reactive values accessed within the effect and re-runs when they change.
+  - Optimized to batch multiple synchronous changes and execute only once.
+  - Automatically cleans up on component unmount, clearing all pending timers to prevent memory leaks.
 
 ## Key Features
 
@@ -75,6 +83,7 @@ import {
   useReactiveRef, // creates an observable value (no re-render on change)
   useReactiveState, // synchronizes the ref to an auto-updating React state
   useReactiveSubRef, // create sub-refs (deep slice!) for fields or parts of the ref
+  useReactiveEffect, // executes side effects when reactive values change
 } from "@racgoo/reactive-kit/react";
 
 function App() {
@@ -120,6 +129,21 @@ function App() {
   const friendState = useReactiveState(friendsRef); // Re-renders on friends array updates
   const skillSetState = useReactiveState(skillSetRef); // Detects Set changes
 
+  // useReactiveState with selector: computed state combining multiple refs
+  const friendCount = useReactiveState(() => friendsRef.current.length);
+  const skillCount = useReactiveState(() => skillSetRef.current.size);
+  const summary = useReactiveState(
+    () =>
+      `${profileRef.current.name} has ${friendCount} friends and ${skillCount} skills`
+  );
+
+  // useReactiveEffect: execute side effects when reactive values change
+  useReactiveEffect(() => {
+    console.log("Profile changed:", profileRef.current.name);
+    console.log("Friend count:", friendsRef.current.length);
+    // Can track multiple refs simultaneously, automatically re-runs on changes
+  });
+
   const handleClick = () => {
     // States returned by useReactiveState are deeply tracked—this will automatically re-render!
     // Mutate strings, numbers, Set, Array—they're all detected
@@ -137,6 +161,7 @@ function App() {
       <div>Profile: {JSON.stringify(profileState)}</div>
       <div>Friends: {JSON.stringify(friendState)}</div>
       <div>Skill Set: {JSON.stringify(skillSetState)}</div>
+      <div>Summary: {summary}</div>
     </div>
   );
 }
@@ -148,7 +173,10 @@ export default App;
 
 - `useReactiveRef` creates a ref whose updates do **not** trigger component re-render (direct read/write)
 - `useReactiveState` provides a view that triggers re-render on change (just like React's state)
+  - **ReactiveRef mode**: Converts a specific ref to state for tracking
+  - **Selector mode**: Creates computed state by combining multiple refs (automatic dependency tracking)
 - `useReactiveSubRef` lets you slice the original ref into deep subfields/arrays/Sets for fine-grained tracking—subRefs stay in sync with the source, even deep-nested
+- `useReactiveEffect` executes side effects when reactive values change (can track multiple refs simultaneously, automatically batched)
 - Array, Object, Map, Set, and primitive values are all automatically tracked! Changes like array `push/pop` or set `add/delete` are fully reflected
 - Each state is internally wrapped in a proxy for efficient, granular re-rendering
 
