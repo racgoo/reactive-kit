@@ -25,7 +25,6 @@ function useReactiveSubRef<T, K>(
     () => selector(reactiveRef),
     [reactiveRef, selector]
   );
-
   let subReactiveRef: ReactiveRef<K> = useReactiveRef(selectedRef);
 
   useEffect(() => {
