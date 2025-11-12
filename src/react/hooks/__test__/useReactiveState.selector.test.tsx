@@ -392,4 +392,107 @@ describe("useReactiveState - Selector Overload", () => {
 
     expect(result.current.hasValue).toBe(true);
   });
+
+  it("should cleanup watch on unmount for useReactiveSelectorState", () => {
+    const { result: refResult } = renderHook(() =>
+      useReactiveRef({ count: 0 })
+    );
+    const stateHistory: number[] = [];
+
+    const { result: stateResult, unmount } = renderHook(() => {
+      const state = useReactiveState(() => refResult.current.current.count);
+      stateHistory.push(state);
+      return state;
+    });
+
+    // 초기 렌더링 후 상태 초기화
+    stateHistory.length = 0;
+
+    // 마운트 상태에서 변경 시 콜백 호출 확인
+    act(() => {
+      refResult.current.current.count = 10;
+    });
+
+    expect(stateResult.current).toBe(10);
+    const stateCountBeforeUnmount = stateHistory.length;
+
+    // 언마운트
+    unmount();
+
+    // 언마운트 후 변경 시 콜백이 호출되지 않아야 함
+    act(() => {
+      refResult.current.current.count = 100;
+    });
+
+    // state는 마지막 값으로 고정되어야 함 (업데이트되지 않음)
+    expect(stateResult.current).toBe(10);
+    // 언마운트 후에는 state가 업데이트되지 않으므로 stateHistory 길이가 증가하지 않아야 함
+    expect(stateHistory.length).toBe(stateCountBeforeUnmount);
+  });
+
+  it("should cleanup watch for useReactiveState overload (selector)", () => {
+    const { result: refResult } = renderHook(() =>
+      useReactiveRef({ value: 0 })
+    );
+    const stateHistory: number[] = [];
+
+    const { result: stateResult, unmount } = renderHook(() => {
+      const state = useReactiveState(() => refResult.current.current.value);
+      stateHistory.push(state);
+      return state;
+    });
+
+    // 초기 렌더링 후 상태 초기화
+    stateHistory.length = 0;
+
+    // 마운트 상태에서 변경
+    act(() => {
+      refResult.current.current.value = 10;
+    });
+
+    expect(stateResult.current).toBe(10);
+    const stateCountBeforeUnmount = stateHistory.length;
+
+    // 언마운트
+    unmount();
+
+    // 언마운트 후 변경 시 업데이트되지 않아야 함
+    act(() => {
+      refResult.current.current.value = 100;
+    });
+
+    expect(stateResult.current).toBe(10);
+    expect(stateHistory.length).toBe(stateCountBeforeUnmount);
+  });
+
+  it("should cleanup watch when component unmounts and prevent memory leaks", () => {
+    const { result: refResult } = renderHook(() => useReactiveRef(0));
+    const watchCallbacks: number[] = [];
+
+    const { unmount } = renderHook(() => {
+      const state = useReactiveState(() => refResult.current.current);
+      watchCallbacks.push(state);
+      return state;
+    });
+
+    // 마운트 상태에서 변경
+    act(() => {
+      refResult.current.current = 5;
+    });
+
+    const callbacksBeforeUnmount = watchCallbacks.length;
+
+    // 언마운트
+    unmount();
+
+    // 여러 번 변경해도 콜백이 호출되지 않아야 함
+    act(() => {
+      refResult.current.current = 10;
+      refResult.current.current = 20;
+      refResult.current.current = 30;
+    });
+
+    // 언마운트 후에는 새로운 콜백이 호출되지 않아야 함
+    expect(watchCallbacks.length).toBe(callbacksBeforeUnmount);
+  });
 });

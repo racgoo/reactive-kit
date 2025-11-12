@@ -11,7 +11,6 @@ function useReactiveEffect(effectCallback: () => void) {
       isPending = true;
       currentScheduleId++;
       //macroTaskQueue
-
       const timeoutId = setTimeout(() => {
         isPending = false;
         sheduleIdTimeoutIdMap.delete(currentScheduleId);

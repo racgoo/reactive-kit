@@ -1,4 +1,4 @@
-# @racgoo/reactive-kit(v1.1.0)
+# @racgoo/reactive-kit(v1.1.1)
 
 Github: [https://github.com/racgoo/reactive-kit](https://github.com/racgoo/reactive-kit)
 
